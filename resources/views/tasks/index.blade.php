@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Tasks</h1>
-    <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add Task</a>
+    <a href="{{ route('tasks.create') }}" class="btn btn-primary">Add Task</a>
+</div>
 
-    @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    <table class="table table-bordered">
+<table class="table table-bordered">
+    <thead>
         <tr>
             <th>Title</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th width="200px">Actions</th>
         </tr>
-        @foreach($tasks as $task)
+    </thead>
+    <tbody>
+        @forelse($tasks as $task)
         <tr>
             <td>{{ $task->title }}</td>
             <td>
@@ -32,7 +32,11 @@
                 </form>
             </td>
         </tr>
-        @endforeach
-    </table>
-</div>
+        @empty
+        <tr>
+            <td colspan="3">No tasks found.</td>
+        </tr>
+        @endforelse
+    </tbody>
+</table>
 @endsection
